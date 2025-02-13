@@ -39,8 +39,7 @@ public class loginsteps1 {
     
     @Given("User navigation to the todo management website")
     public void userNavigationToTheTodoManagementWebsite() throws Exception {
-      //   System.setProperty("webdriver.chrome.driver", "C:\\vishal\\Automation\\Chrome Driver\\chromedriver-win64\\chromedriver.exe");
-             System.setProperty("webdriver.chrome.driver", System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + "/chromedriver-linux64/chromedriver.exe");
+         System.setProperty("webdriver.chrome.driver", "C:\\vishal\\Automation\\Chrome Driver\\chromedriver-win64\\chromedriver.exe");
 
 
 	    d = new ChromeDriver();

@@ -1,22 +1,18 @@
-name: Run Selenium Tests Every 10 Minutes
+name: Scheduled Cucumber Tests
 
 on:
   schedule:
-    - cron: '*/10 * * * *'  # Runs every 10 minutes
+    - cron: "*/01 * * * *"  # Runs at 10 PM UTC
+    
   workflow_dispatch:  # Allows manual trigger
 
 jobs:
-  selenium-tests:
-    runs-on: ubuntu-latest  # Use Windows if needed
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+  test:
+    runs-on: ubuntu-latest
 
-      - name: Set up Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'  # Use 'zulu' or 'adopt' if needed
-          java-version: '17'  # Change based on your project
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
       - name: Install Google Chrome
         run: |
@@ -37,4 +33,4 @@ jobs:
           java-version: '17'  # Update as needed
 
       - name: Run Tests
-          mvn clean test  # Replace with your test command
+        run: mvn test

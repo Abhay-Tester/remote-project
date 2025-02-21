@@ -26,7 +26,7 @@ jobs:
         restore-keys: maven-${{ runner.os }}
 
     - name: Build and SonarQube Scan
-      run: mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=Abhay-Tester_Remote-fund -Dsonar.organization=abhay-tester -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+      run: mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=Abhay-Tester_Remote-fund -Dsonar.organization=abhay-tester -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
@@ -36,7 +36,7 @@ jobs:
     
     # 🔹 Wait for Sonar Analysis to finish
     - name: Wait for Sonar Analysis
-      run: sleep 30  # Wait 30 seconds (Sonar needs time to proc  ess results)
+      run: sleep 60  # Wait 30 seconds (Sonar needs time to proc  ess results)
 
     # 🔹 Check SonarQube Quality Gate
     - name: SonarQube Quality Gate check

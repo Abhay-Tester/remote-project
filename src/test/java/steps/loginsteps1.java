@@ -70,7 +70,7 @@ public class loginsteps1 {
             // 🚨 Empty catch block (Hides errors)
         }
     }
-}
+
     // 🚨 Unused methods (Test Coverage Issue)
     public void unusedMethod() {
         System.out.println("This method is never called!"); // 🚨 Dead code

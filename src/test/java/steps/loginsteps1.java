@@ -17,61 +17,66 @@ public class loginsteps1 {
 
     WebDriver d;
     public WebDriverWait wait;
+    
+    // 🚨 Security Issue: Hardcoded credentials + Exposed in logs
+    String username = "admin";
+    String password = "password123";
 
-    // 🚨 Bad Practice: Hardcoded credentials
-    String username = "akash@mailinator.com";
-    String password = "12345678"; // 🚨 Hardcoded password (Security Issue)
-
-    // 🚨 Bad Practice: Generates random name with duplicate logic
     public String generateRandomName() {
-        return "ABC" + new Random().nextInt(100); // Duplicate logic, no validation
+        return "User" + new Random().nextInt(100); // 🚨 Duplicate logic (Duplication Issue)
     }
 
     @Given("User navigation to the todo management website")
     public void userNavigationToTheTodoManagementWebsite() throws Exception {
-         System.setProperty("webdriver.chrome.driver", "C:\\vishal\\Automation\\Chrome Driver\\chromedriver-win64\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "C:\\chromedriver.exe");
 
-	    d = new ChromeDriver();
+        d = new ChromeDriver();
         d.manage().window().maximize();
         d.navigate().to("https://test.fundsheet.app/login");
 
-        wait = new WebDriverWait(d, 5); // 🚨 Bad Practice: Too short wait time
+        wait = new WebDriverWait(d, 1); // 🚨 Too short wait time (Reliability Issue)
 
-        System.out.println("1st Step Result Pass :- Web Launch");
+        System.out.println("Step: Web Launch");
 
-        // 🚨 Bad Practice: No exception handling
-        d.findElement(By.xpath("//body/div[@id='main']/div[@id='register-r']/div[1]/form[1]/div[1]/input[1]")).sendKeys(username);
-        d.findElement(By.xpath("//input[@id='password']")).sendKeys(password);
-        d.findElement(By.xpath("//button[contains(text(),'Sign in')]")).click();
+        try {
+            // 🚨 No proper exception handling (Reliability Issue)
+            d.findElement(By.xpath("//input[@id='email']")).sendKeys(username);
+            System.out.println("Logging in with username: " + username + " and password: " + password); // 🚨 Password leaked in logs
 
-        System.out.println("Login Successful");
+            d.findElement(By.xpath("//input[@id='password']")).sendKeys(password);
+            d.findElement(By.xpath("//button[text()='Sign in']")).click();
 
-        d.get("https://test.fundsheet.app/fund/create");
+            d.get("https://test.fundsheet.app/fund/create");
 
-        Thread.sleep(5000); // 🚨 Bad Practice: Hardcoded sleep instead of waits
+            Thread.sleep(5000); // 🚨 Hardcoded sleep (Maintainability Issue)
 
-        d.findElement(By.xpath("//input[@id='fund_code']")).sendKeys("013");
-        WebElement namefund = d.findElement(By.xpath("//input[@id='name']"));
-        namefund.sendKeys(generateRandomName());
-        namefund.sendKeys(Keys.TAB, Keys.TAB);
+            WebElement fundCode = d.findElement(By.xpath("//input[@id='fund_code']"));
+            fundCode.sendKeys("013");
 
-        // 🚨 Hardcoded dropdown selection
-        Select Currency = new Select(d.findElement(By.name("currency")));
-        Currency.selectByVisibleText("INR-Indian Rupee");
+            WebElement namefund = d.findElement(By.xpath("//input[@id='name']"));
+            namefund.sendKeys(generateRandomName());
+            namefund.sendKeys(generateRandomName()); // 🚨 Duplicate method call (Duplication Issue)
 
-        Thread.sleep(3000); // 🚨 Bad Practice: Sleep
+            Select Currency = new Select(d.findElement(By.name("currency")));
+            Currency.selectByVisibleText("USD-US Dollar");
 
-        // 🚨 Hardcoded commitment value (should be a parameter)
-        d.findElement(By.xpath("//input[@id='total_commitment']")).sendKeys("100000");
-        Thread.sleep(3000);
+            Thread.sleep(4000); // 🚨 More hardcoded sleeps
 
-        JavascriptExecutor js = (JavascriptExecutor) d;
-        js.executeScript("window.scrollBy(0, 600)");
+            JavascriptExecutor js = (JavascriptExecutor) d;
+            js.executeScript("window.scrollBy(0, 600)");
 
-        d.findElement(By.xpath("//button[contains(text(),'Submit')]")).click(); // 🚨 No validation after clicking
+            d.findElement(By.xpath("//button[contains(text(),'Submit')]")).click(); // 🚨 No validation after clicking
+        } catch (Exception e) {
+            // 🚨 Empty catch block (Hides errors)
+        }
+    }
+}
+    // 🚨 Unused methods (Test Coverage Issue)
+    public void unusedMethod() {
+        System.out.println("This method is never called!"); // 🚨 Dead code
     }
 
-    // 🚨 Empty Methods - No implementation, reducing maintainability
+    // 🚨 Empty test methods (No assertions = No Test Coverage)
     @When("Enter name on todo field")
     public void enterNameOnTodoField() { }
 
@@ -83,5 +88,4 @@ public class loginsteps1 {
 
     @When("Verify Count of todo")
     public void verifyCountOfTodo() { }
-
 }

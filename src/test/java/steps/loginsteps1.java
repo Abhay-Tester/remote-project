@@ -18,7 +18,7 @@ public class loginsteps1 {
     WebDriver d;
     public WebDriverWait wait;
     
-    // 🚨 Security Issue: Hardcoded credentials + Exposed in logs
+    //  Security Issue: Hardcoded credentials + Exposed in logs
     String username = "admin";
     String password = "password123";
 

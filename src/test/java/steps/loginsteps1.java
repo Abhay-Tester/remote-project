@@ -34,7 +34,7 @@ public class loginsteps1 {
         d.manage().window().maximize();
         d.navigate().to("https://test.fundsheet.app/login");
 
-        wait = new WebDriverWait(d, 1); // 🚨 Too short wait time (Reliability Issue)
+        wait = new WebDriverWait(d, 1); //  Too short wait time (Reliability Issue)
 
         System.out.println("Step: Web Launch");
 

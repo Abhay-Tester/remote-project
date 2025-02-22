@@ -39,7 +39,7 @@ public class loginsteps1 {
         System.out.println("Step: Web Launch");
 
         try {
-            // 🚨 No proper exception handling (Reliability Issue)
+            //  No proper exception handling (Reliability Issue)
             d.findElement(By.xpath("//input[@id='email']")).sendKeys(username);
             System.out.println("Logging in with username: " + username + " and password: " + password); // 🚨 Password leaked in logs
 
